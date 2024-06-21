@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Animator playerAnimator;
     //public SpriteRenderer spriteRenderer;
+    public EnemyScanner enemyScanner;
     public float speed = 3f;
     public Vector2 inputVec;
 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         //spriteRenderer = GetComponent<SpriteRenderer>();
         playerAnimator = gameObject.transform.GetChild(0).GetComponent<Animator>();
+        enemyScanner = GetComponent<EnemyScanner>();
     }
 
     void OnMove(InputValue value){

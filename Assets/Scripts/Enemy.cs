@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public RuntimeAnimatorController[] animCon;
+    public float health;
+    public float maxHealth;
     public float speed;
+    
+    private bool isLive;
+
     public Rigidbody2D target;  //타겟 플레이어
-    private bool isLive = true;
-
     private Rigidbody2D rb;
+    public Animator animator;
     private SpriteRenderer spriteRenderer;
-    private Collider2D collider;
+    public Collider2D collider;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -20,10 +26,23 @@ public class Enemy : MonoBehaviour
     }
     void OnEnable(){
         target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        isLive = true;
+        collider.enabled = true;
+        rb.simulated = true;
+        spriteRenderer.sortingOrder = 2;
+        animator.SetBool("Dead", false);
+        health = maxHealth;
+    }
+    public void Init(SpawnData data){
+        animator.runtimeAnimatorController = animCon[data.spriteType];
+        speed = data.speed;
+        maxHealth = data.health;
+        health = data.health;
     }
 
     void FixedUpdate(){
-        if(!isLive)
+        if(!isLive || animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
             return;
         
         Vector2 dirVec = target.position - rb.position; //타겟 방향
@@ -37,15 +56,46 @@ public class Enemy : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D collision){
-        if(!collision.CompareTag("Area")){
+        if(!collision.CompareTag("Area") || !isLive){
             return;
         }
         Vector3 playerPos = GameManager.instance.player.transform.position;
         Vector3 playerDir = GameManager.instance.player.inputVec;
         if(collider.tag == "Enemy"){
             if(collider.enabled){
-                transform.Translate(playerDir * 15 + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f));
+                transform.Translate(playerDir * 20 + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f));
             }
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D collider){
+        if(!collider.CompareTag("Weapon") || !isLive)
+            return;
+        
+        health -= collider.GetComponent<Weapon>().damage;
+        StartCoroutine(KnockBack());
+        if(health > 0){
+            animator.SetTrigger("Hit");
+        }
+        else{
+            isLive = false;
+            this.collider.enabled = false;
+            rb.simulated = false;
+            spriteRenderer.sortingOrder = 1;
+            animator.SetBool("Dead", true);
+            GameManager.instance.kill++;
+            GameManager.instance.GetExp();
+        }
+    }
+
+    private IEnumerator KnockBack(){
+        yield return new WaitForFixedUpdate();
+        Vector3 playerPos = GameManager.instance.player.transform.position;
+        Vector3 dirVec = transform.position - playerPos;
+        rb.AddForce(dirVec.normalized * 3f, ForceMode2D.Impulse);
+    }
+
+    private void Dead(){
+        gameObject.SetActive(false);
     }
 }
