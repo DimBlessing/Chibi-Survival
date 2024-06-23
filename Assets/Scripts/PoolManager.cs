@@ -6,10 +6,11 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
     public GameObject[] enemyPrefabs;   //적 프리팹
+    public GameObject[] itemPrefabs;    //드랍 아이템 프리팹
     private List<GameObject>[] pools;   //각 프리팹 종류에 따른 풀
 
     void Awake(){
-        pools = new List<GameObject>[enemyPrefabs.Length];
+        pools = new List<GameObject>[enemyPrefabs.Length + itemPrefabs.Length];
         for(int i = 0; i < pools.Length; i++){
             pools[i] = new List<GameObject>();
         }

@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float health;
     public float maxHealth;
     public float speed;
+    public int itemId;  //ItemManager의 id로 전달
     
     private bool isLive;
 
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
         speed = data.speed;
         maxHealth = data.health;
         health = data.health;
+        itemId = data.expId;
     }
 
     void FixedUpdate(){
@@ -84,9 +86,18 @@ public class Enemy : MonoBehaviour
             spriteRenderer.sortingOrder = 1;
             animator.SetBool("Dead", true);
             GameManager.instance.kill++;
-            GameManager.instance.GetExp();
+            //GameManager.instance.GetExp();
         }
     }
+    private void DropItem(int itemId){
+        GameObject item = GameManager.instance.pool.GetPoolObj(3);  //경험치 아이템 생성
+        item.transform.position = gameObject.transform.position;    //enemy 사망 지점으로 위치 조정
+        item.GetComponent<ItemManager>().Init(itemId);
+
+
+        //특수 아이템 랜덤 생성 기능 추가
+    }
+
 
     private IEnumerator KnockBack(){
         yield return new WaitForFixedUpdate();
@@ -97,5 +108,6 @@ public class Enemy : MonoBehaviour
 
     private void Dead(){
         gameObject.SetActive(false);
+        DropItem(itemId);
     }
 }

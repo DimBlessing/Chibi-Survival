@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GetExp(){
-        exp++;
+    public void GetExp(int expAmount){
+        exp += expAmount;
         if(exp == nextExp[level]){
             level++;
             exp = 0;
