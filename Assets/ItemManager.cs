@@ -9,12 +9,17 @@ public class ItemManager : MonoBehaviour
     public int prefabId;    //풀 프리팹 ID
     public int expAmount;
     private Collider2D collider;
+    private Rigidbody2D rb;
     private Animator itemAnimator;
 
     void Awake()
     {
         collider = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
         itemAnimator = GetComponent<Animator>();
+    }
+    void OnDisable(){
+        GameManager.instance.GetExp(expAmount);
     }
 
     public void Init(int id){
@@ -43,7 +48,28 @@ public class ItemManager : MonoBehaviour
         if(!collision.CompareTag("Player"))
             return;
         
-        GameManager.instance.GetExp(expAmount);
+        StartCoroutine(AbsorbItem());
+    }
+    private IEnumerator AbsorbItem()
+    {
+        Vector3 playerPos = GameManager.instance.player.transform.position;
+        Vector3 itemPos = gameObject.transform.position;
+        Vector3 targetDir = (playerPos - itemPos).normalized;
+        float speed = 5f;
+
+        Debug.Log("move item");
+        while (Vector3.Distance(playerPos, itemPos) > 0.1f)
+        {
+            playerPos = GameManager.instance.player.transform.position;
+            itemPos = Vector3.MoveTowards(itemPos, playerPos, speed * Time.deltaTime);
+            rb.MovePosition(itemPos);
+            yield return null;
+        }
+
+        // 플레이어와 겹쳐지면 이동 정지
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
         gameObject.SetActive(false);
+        yield return null;
     }
 }

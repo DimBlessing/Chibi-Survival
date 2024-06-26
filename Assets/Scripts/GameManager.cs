@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     //플레이어 게임 진행상태
     [Header("Player Info")]
+    public int health;
+    public int maxHealth = 100;
     public int level;
     public int kill;
     public int exp;
@@ -23,6 +25,9 @@ public class GameManager : MonoBehaviour
 
     void Awake(){
         instance = this;
+    }
+    void Start(){
+        health = maxHealth;
     }
 
     void Update(){
