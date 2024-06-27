@@ -7,6 +7,7 @@ public class Follow : MonoBehaviour
     public RectTransform rect;
     void Awake()
     {
+        Application.targetFrameRate = 60;
         rect = GetComponent<RectTransform>();
     }
 
