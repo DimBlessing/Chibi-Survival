@@ -11,7 +11,8 @@ public class WeaponManager : MonoBehaviour
     public int prefabId;    //풀 프리팹 ID
     public float damage;
     public int count;   //무기 배치 갯수
-    public float speed; //근접 회전 속도
+    public float rpm; //근접 회전 속도
+    public float speed; //원거리 탄속
     public int penetrate;   //관통(-1 이면 무한관통)
     public float attackInterval; //원거리 공격 속도
 
@@ -29,11 +30,17 @@ public class WeaponManager : MonoBehaviour
     public void Init(){
         switch(id){
             case 0: //근접
-                speed = 150;
+                rpm = 150;
+                speed = 0;
                 MeleeBatch();
                 break;
-            case 1: //원거리
+            case 1: //원거리 마법구
                 attackInterval = 0.3f;
+                speed = 10f;
+                break;
+            case 2: //화살
+                attackInterval = 0.2f;
+                speed = 5f;
                 break;
             default:
                 
@@ -50,15 +57,27 @@ public class WeaponManager : MonoBehaviour
         }
         else if(id == 1){
             this.penetrate += penetrate;            
+            //동시 발사 갯수 및 연사속도 향상 기능 추가
+        }
+        else if(id == 2){
+            this.penetrate += penetrate;
+            //동시 발사 갯수 및 연사속도 향상 기능 추가
         }
     }
 
     void Update(){
         switch(id){
             case 0: //근접
-                transform.Rotate(Vector3.back * speed * Time.deltaTime);
+                transform.Rotate(Vector3.back * rpm * Time.deltaTime);
                 break;
-            case 1: //원거리
+            case 1: //원거리 마법구
+                timer += Time.deltaTime;
+                if(timer > attackInterval){
+                    timer = 0f;
+                    Fire();
+                }
+                break;
+            case 2: //화살
                 timer += Time.deltaTime;
                 if(timer > attackInterval){
                     timer = 0f;
@@ -92,22 +111,28 @@ public class WeaponManager : MonoBehaviour
             Vector3 rotVec = Vector3.forward * 360f * i / count;
             weapon.Rotate(rotVec);
             weapon.Translate(weapon.up * 1.5f, Space.World);
-            weapon.GetComponent<Weapon>().Init(id, damage, -1, Vector3.zero);
+            weapon.GetComponent<Weapon>().Init(id, damage, speed, -1, Vector3.zero);
         }
     }
 
     private void Fire(){
+        Vector3 targetPos = new Vector3(0,0,0);
         if(!player.enemyScanner.nearestTarget){
-            return;
+            //return;
+            //근처 적 없을 땐 무작위 방향으로 발사하도록 추가
+            targetPos = player.GetComponentInChildren<EnemySpawner>().spawnPoint[UnityEngine.Random.Range(0, 18)].position;           
         }
-        Debug.Log("FIre");
-        Vector3 targetPos = player.enemyScanner.nearestTarget.position;
-        Vector3 targetDir = targetPos - transform.position;
-        targetDir = targetDir.normalized;
+        else{
+            targetPos = player.enemyScanner.nearestTarget.position;
+        }
 
+        Vector3 targetDir = (targetPos - transform.position).normalized;
+        //targetDir = targetDir.normalized;
+        Debug.Log("Fire");
+    
         Transform bullet = GameManager.instance.pool.GetPoolObj(prefabId).transform;
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, targetDir);
-        bullet.GetComponent<Weapon>().Init(id, damage, penetrate, targetDir);
+        bullet.GetComponent<Weapon>().Init(id, damage, speed, penetrate, targetDir);
     }
 }

@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     void Awake(){
         instance = this;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     void Start(){
         health = maxHealth;

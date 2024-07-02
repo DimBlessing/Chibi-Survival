@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
         }
     }
     private void DropItem(int itemId){
-        GameObject item = GameManager.instance.pool.GetPoolObj(3);  //경험치 아이템 생성
+        GameObject item = GameManager.instance.pool.DropItemPool(0);  //경험치 아이템 생성
         item.transform.position = gameObject.transform.position;    //enemy 사망 지점으로 위치 조정
         item.GetComponent<ItemManager>().Init(itemId);
 
