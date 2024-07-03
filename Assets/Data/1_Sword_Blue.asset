@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3730a1595ec5a40f2af6882374c29f9b, type: 3}
   m_Name: 1_Sword_Blue
   m_EditorClassIdentifier: 
-  itemType: 1
-  ItemId: 1
+  itemType: 0
+  ItemId: 0
   itemName: "\uC7A5\uAC80"
   itemDesc: 
   itemIcon: {fileID: 2463493976517071750, guid: 26219afe650eca349a89f642aec6aaf2, type: 3}
   baseDamage: 4
-  baseCount: 3
+  baseCount: 1
   damages:
   - 0.5
   - 1
@@ -26,4 +26,5 @@ MonoBehaviour:
   - 2
   - 2.5
   counts: 0100000001000000010000000100000001000000
+  penetrates: 0000000000000000000000000000000000000000
   projectile: {fileID: 2402887495934300842, guid: 0ab4c940c9aa64a68b284c0bb2178d91, type: 3}

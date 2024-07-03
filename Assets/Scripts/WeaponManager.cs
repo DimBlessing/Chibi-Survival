@@ -21,13 +21,24 @@ public class WeaponManager : MonoBehaviour
     private PlayerController player;
 
     void Awake(){
-        player = GetComponentInParent<PlayerController>();
+        player = GameManager.instance.player;
     }
-    void Start(){
-        Init();
-    }
-
-    public void Init(){
+    
+    public void Init(ItemData data){
+        //Basic Setting
+        name = "Weapon" + data.ItemId;
+        transform.parent = player.transform;
+        transform.localPosition = new Vector3(0, 0.6f, 0);
+        //Property Setting
+        id = data.ItemId;
+        damage = data.baseDamage;
+        count = data.baseCount;
+        for(int i = 0; i < GameManager.instance.pool.battlePrefabs.Length; i++){
+            if(data.projectile == GameManager.instance.pool.battlePrefabs[i]){
+                prefabId = i;
+                break;
+            }
+        }
         switch(id){
             case 0: //근접
                 rpm = 150;
@@ -52,7 +63,7 @@ public class WeaponManager : MonoBehaviour
         this.damage = damage;
         this.count += count;
 
-        if(id == 0){
+        if(id == 0 && penetrate == -1){
             MeleeBatch();
         }
         else if(id == 1){
