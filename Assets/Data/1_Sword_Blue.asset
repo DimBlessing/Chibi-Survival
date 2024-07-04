@@ -19,6 +19,7 @@ MonoBehaviour:
   itemIcon: {fileID: 2463493976517071750, guid: 26219afe650eca349a89f642aec6aaf2, type: 3}
   baseDamage: 4
   baseCount: 1
+  basePenetrate: -1
   damages:
   - 0.5
   - 1

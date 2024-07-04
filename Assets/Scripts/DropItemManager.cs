@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ItemManager : MonoBehaviour
+public class DropItemManager : MonoBehaviour
 {
     public int id;  //아이템 ID
     public int prefabId;    //풀 프리팹 ID
@@ -55,7 +55,7 @@ public class ItemManager : MonoBehaviour
         Vector3 playerPos = GameManager.instance.player.transform.position;
         Vector3 itemPos = gameObject.transform.position;
         Vector3 targetDir = (playerPos - itemPos).normalized;
-        float speed = 5f;
+        float speed = 7f;
 
         Debug.Log("move item");
         while (Vector3.Distance(playerPos, itemPos) > 0.1f)

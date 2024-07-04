@@ -92,10 +92,11 @@ public class Enemy : MonoBehaviour
     private void DropItem(int itemId){
         GameObject item = GameManager.instance.pool.DropItemPool(0);  //경험치 아이템 생성
         item.transform.position = gameObject.transform.position;    //enemy 사망 지점으로 위치 조정
-        item.GetComponent<ItemManager>().Init(itemId);
+        item.GetComponent<DropItemManager>().Init(itemId);
 
 
         //특수 아이템 랜덤 생성 기능 추가
+        //일정 확률로 힐링포션, 자석, 스킬부스트 아이템 드랍
     }
 
 

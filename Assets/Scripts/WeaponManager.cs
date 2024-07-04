@@ -57,9 +57,11 @@ public class WeaponManager : MonoBehaviour
                 
                 break;
         }
+
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
-    public void LevelUp(float damage, int count, int penetrate){
+    public void LevelUp(float damage, int count, int penetrate, float attackInterval){
         this.damage = damage;
         this.count += count;
 
@@ -69,11 +71,14 @@ public class WeaponManager : MonoBehaviour
         else if(id == 1){
             this.penetrate += penetrate;            
             //동시 발사 갯수 및 연사속도 향상 기능 추가
+            this.attackInterval -= attackInterval;
         }
         else if(id == 2){
             this.penetrate += penetrate;
             //동시 발사 갯수 및 연사속도 향상 기능 추가
         }
+
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     void Update(){
@@ -102,7 +107,7 @@ public class WeaponManager : MonoBehaviour
 
         //Test
         if(Input.GetButtonDown("Jump")){
-            LevelUp(10, 1, 1);   
+            //LevelUp(10, 1, 1);   
         }
     }
 

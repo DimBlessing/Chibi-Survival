@@ -11,6 +11,7 @@ public class Item : MonoBehaviour
     public ItemData itemData;
     public int level;
     public WeaponManager weaponManager;
+    public Gear gear;
 
     public Image icon;
     public TextMeshProUGUI textLevel;
@@ -39,30 +40,40 @@ public class Item : MonoBehaviour
                 else{
                     float nextDamage = itemData.baseDamage;
                     int nextCount = 0;
-                    int nextPenetrate = -1;
-                    //count, penetrate 변수 통합 사용
+                    int nextPenetrate = 0;
+                    float nextAttackInterval = 0f;
 
                     nextDamage += itemData.baseDamage * itemData.damages[level];
                     nextCount += itemData.counts[level];
-                    nextPenetrate += itemData.penetrates[level];
+                    nextPenetrate += itemData.basePenetrate + itemData.penetrates[level];
 
                     if(itemData.itemType == ItemData.ItemType.Melee){
                         nextPenetrate = -1;
                     }
-                    weaponManager.LevelUp(nextDamage, nextCount, nextPenetrate);
+                    weaponManager.LevelUp(nextDamage, nextCount, nextPenetrate, nextAttackInterval);
                 }
+                level++;
                 break;
+
             case ItemData.ItemType.Glove:
-                
-                break;
             case ItemData.ItemType.Shoe:
-
+                if(level == 0){
+                    GameObject newGear = new GameObject();
+                    gear = newGear.AddComponent<Gear>();
+                    gear.Init(itemData);
+                }
+                else{
+                    float nextRate = itemData.damages[level];
+                    Debug.Log("rate: " + nextRate);
+                    gear.LevelUp(nextRate);
+                }
+                level++;
                 break;
-            case ItemData.ItemType.Potion:
 
+            case ItemData.ItemType.Potion:
+                GameManager.instance.health = GameManager.instance.maxHealth;   //힐량 조정 필요
                 break;
         }
-        level++;
         if(level == itemData.damages.Length){
             GetComponent<Button>().interactable = false;
         }
