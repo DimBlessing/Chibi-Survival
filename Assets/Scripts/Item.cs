@@ -15,6 +15,8 @@ public class Item : MonoBehaviour
 
     public Image icon;
     public TextMeshProUGUI textLevel;
+    public TextMeshProUGUI textName;
+    public TextMeshProUGUI textDesc;
 
     void Awake(){
         icon = GetComponentsInChildren<Image>()[1];
@@ -22,9 +24,13 @@ public class Item : MonoBehaviour
 
         TextMeshProUGUI[] texts = GetComponentsInChildren<TextMeshProUGUI>();
         textLevel = texts[0];
+        textName = texts[1];
+        textDesc = texts[2];
+        textName.text = itemData.itemName;
+        textDesc.text = itemData.itemDesc;
     }
 
-    void LateUpdate(){
+    void OnEnable(){
         textLevel.text = "Lv." + (level + 1);
     }
 

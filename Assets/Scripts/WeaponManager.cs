@@ -82,6 +82,9 @@ public class WeaponManager : MonoBehaviour
     }
 
     void Update(){
+        if(!GameManager.instance.isLive){
+            return;
+        }
         switch(id){
             case 0: //근접
                 transform.Rotate(Vector3.back * rpm * Time.deltaTime);

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public ItemData baseWeapon;
     public Transform playerRoot;
     public Rigidbody2D rb;
     public Animator playerAnimator;
@@ -21,18 +22,28 @@ public class PlayerController : MonoBehaviour
         //spriteRenderer = GetComponent<SpriteRenderer>();
         playerAnimator = gameObject.transform.GetChild(0).GetComponent<Animator>();
         enemyScanner = GetComponent<EnemyScanner>();
+        GameManager.instance.CreateBaseWeapon(baseWeapon);
     }
 
     void OnMove(InputValue value){
+        if(!GameManager.instance.isLive){
+            return;
+        }
         inputVec = value.Get<Vector2>();
     }
 
     void FixedUpdate(){
+        if(!GameManager.instance.isLive){
+            return;
+        }
         Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + nextVec);
     }
     
     void LateUpdate(){
+        if(!GameManager.instance.isLive){
+            return;
+        }
         playerAnimator.SetFloat("Speed", inputVec.magnitude);
         currentRotation = playerRoot.localEulerAngles;
         if(inputVec.x != 0){

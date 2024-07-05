@@ -15,10 +15,11 @@ MonoBehaviour:
   itemType: 3
   ItemId: 101
   itemName: "\uAC00\uC8FD \uC7A5\uD654"
-  itemDesc: 
+  itemDesc: "\uB354 \uBE68\uB9AC \uB2EC\uB9B4 \uC218 \uC788\uAC8C \uB3C4\uC640\uC90D\uB2C8\uB2E4."
   itemIcon: {fileID: -966295699, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   baseDamage: 0
   baseCount: 0
+  basePenetrate: 0
   damages:
   - 0.1
   - 0.2
@@ -26,4 +27,5 @@ MonoBehaviour:
   - 0.4
   - 0.5
   counts: 0000000000000000000000000000000000000000
+  penetrates: 
   projectile: {fileID: 0}
