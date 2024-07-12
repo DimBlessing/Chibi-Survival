@@ -16,9 +16,10 @@ public class ItemData : ScriptableObject
     public Sprite itemIcon;
 
     [Header("# Level Data")]
-    public float baseDamage;
-    public int baseCount;
-    public int basePenetrate;
+    public float baseDamage;    //공격력
+    public int baseCount;       //근접무기 갯수
+    public int basePenetrate;   //관통력(근접 = -1)
+
     public float[] damages;
     public int[] counts;
     public int[] penetrates;

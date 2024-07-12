@@ -70,12 +70,12 @@ public class WeaponManager : MonoBehaviour
         }
         else if(id == 1){
             this.penetrate += penetrate;            
-            //동시 발사 갯수 및 연사속도 향상 기능 추가
-            this.attackInterval -= attackInterval;
+            //동시 발사 갯수 증가
+            //this.attackInterval += attackInterval;
         }
         else if(id == 2){
             this.penetrate += penetrate;
-            //동시 발사 갯수 및 연사속도 향상 기능 추가
+            //동시 발사 갯수 증가
         }
 
         player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
@@ -93,7 +93,8 @@ public class WeaponManager : MonoBehaviour
                 timer += Time.deltaTime;
                 if(timer > attackInterval){
                     timer = 0f;
-                    Fire();
+                    // /Fire();
+                    StartCoroutine(CoFire(count));
                 }
                 break;
             case 2: //화살
@@ -134,6 +135,13 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    private IEnumerator CoFire(int count){
+        while(count > 0){
+            Fire();
+            yield return new WaitForSeconds(0.05f);
+            count--;
+        }
+    }
     private void Fire(){
         Vector3 targetPos = new Vector3(0,0,0);
         if(!player.enemyScanner.nearestTarget){

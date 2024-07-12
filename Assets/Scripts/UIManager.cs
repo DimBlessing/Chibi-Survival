@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
 
     void LateUpdate(){
         curExp = GameManager.instance.exp;
-        maxExp = GameManager.instance.nextExp[GameManager.instance.level];
+        maxExp = GameManager.instance.nextExp[Mathf.Min(GameManager.instance.level, GameManager.instance.nextExp.Length - 1)];
         curHealth = GameManager.instance.health;
         maxHealth = GameManager.instance.maxHealth;
         expSlider.value = curExp / maxExp;
@@ -52,6 +52,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void ShowLevelUI(){
+        rect.GetComponent<LevelUp>().NextLevel();
         rect.localScale = Vector3.one;
         GameManager.instance.PauseGame();
     }

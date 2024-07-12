@@ -34,6 +34,12 @@ public class Item : MonoBehaviour
         textLevel.text = "Lv." + (level + 1);
     }
 
+    void Init(){
+        //플레이어 기본무기 정보 로드
+        weaponManager = GameManager.instance.weaponManagers[0];
+
+    }
+
     public void OnClick(){
         switch(itemData.itemType){
             case ItemData.ItemType.Melee:
@@ -52,9 +58,11 @@ public class Item : MonoBehaviour
                     nextDamage += itemData.baseDamage * itemData.damages[level];
                     nextCount += itemData.counts[level];
                     nextPenetrate += itemData.basePenetrate + itemData.penetrates[level];
+                    //nextAttackInterval -= itemData.baseAttackInterval - itemData.attackIntervals[level];
 
                     if(itemData.itemType == ItemData.ItemType.Melee){
                         nextPenetrate = -1;
+                        nextAttackInterval = 0;
                     }
                     weaponManager.LevelUp(nextDamage, nextCount, nextPenetrate, nextAttackInterval);
                 }

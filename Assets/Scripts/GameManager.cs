@@ -45,15 +45,16 @@ public class GameManager : MonoBehaviour
     }
 
     public void CreateBaseWeapon(ItemData data){ //기본 or 새 무기 생성
-        GameObject newWeapon = new GameObject();
-        weaponManagers.Add(newWeapon.AddComponent<WeaponManager>());
+        //GameObject newWeapon = new GameObject();
+        //weaponManagers.Add(newWeapon.AddComponent<WeaponManager>());
         //PlayerController 인스펙터에 itemData 매개변수로 전달받아 Init
-        newWeapon.GetComponent<WeaponManager>().Init(data);
+        //newWeapon.GetComponent<WeaponManager>().Init(data);
+        uIManager.rect.GetComponent<LevelUp>().Select(data.ItemId);
     }
 
     public void GetExp(int expAmount){
         exp += expAmount;
-        if(exp == nextExp[level]){
+        if(exp >= nextExp[Mathf.Min(level, nextExp.Length - 1)]){
             level++;
             exp = 0;
             uIManager.ShowLevelUI();

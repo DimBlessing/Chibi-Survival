@@ -20,6 +20,7 @@ MonoBehaviour:
   baseDamage: 3
   baseCount: 3
   basePenetrate: 0
+  baseAttackInterval: 0.2
   damages:
   - 0.5
   - 1
@@ -28,4 +29,10 @@ MonoBehaviour:
   - 2.5
   counts: 0000000000000000010000000000000001000000
   penetrates: 0000000000000000000000000000000000000000
+  attackIntervals:
+  - 0.02
+  - 0.02
+  - 0.02
+  - 0.02
+  - 0.02
   projectile: {fileID: 7184534462491959578, guid: c7eb54cb7a91d4203b095b84571dd2ee, type: 3}
