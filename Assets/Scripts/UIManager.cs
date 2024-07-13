@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("# Main UI")]
+    [Header("# HUD UI")]
     public Slider expSlider;
     public Slider healthSlider;
     public TextMeshProUGUI levelText;
@@ -23,6 +23,13 @@ public class UIManager : MonoBehaviour
 
     [Header("# LevelUp UI")]
     public RectTransform rect;
+
+    [Header("# Main UI")]
+    public GameObject mainUI;
+
+    [Header("# End UI")]
+    public GameObject endUI;
+    public GameObject[] endTitles;
 
     void Awake(){
 
@@ -51,6 +58,7 @@ public class UIManager : MonoBehaviour
         timeText.text = string.Format("{0:D2}:{1:D2}", min, sec);
     }
 
+    //레벨업 UI
     public void ShowLevelUI(){
         rect.GetComponent<LevelUp>().NextLevel();
         rect.localScale = Vector3.one;
@@ -59,5 +67,13 @@ public class UIManager : MonoBehaviour
     public void HideLevelUI(){
         rect.localScale = Vector3.zero;
         GameManager.instance.ResumeGame();
+    }
+
+    //결과 UI
+    public void Lose(){
+        endTitles[0].SetActive(true);
+    }
+    public void Victory(){
+        endTitles[1].SetActive(true);
     }
 }

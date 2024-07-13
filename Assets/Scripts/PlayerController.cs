@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,7 +24,7 @@ public class PlayerController : MonoBehaviour
         //spriteRenderer = GetComponent<SpriteRenderer>();
         playerAnimator = gameObject.transform.GetChild(0).GetComponent<Animator>();
         enemyScanner = GetComponent<EnemyScanner>();
-        GameManager.instance.CreateBaseWeapon(baseWeapon);
+        //GameManager.instance.CreateBaseWeapon(baseWeapon);
     }
 
     void OnMove(InputValue value){
@@ -56,6 +58,21 @@ public class PlayerController : MonoBehaviour
                 currentRotation.y = 0f;
                 playerRoot.localEulerAngles = currentRotation;
             }
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision){
+        if(!GameManager.instance.isLive)
+            return;
+        
+        GameManager.instance.health -= Time.deltaTime * 10f;    //적마다 다른 데미지로 향후 수정
+
+        if(GameManager.instance.health <= 0){
+            for(int i = 2; i < transform.childCount; i++){
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+            playerAnimator.SetTrigger("Dead");
+            GameManager.instance.GameOver();
         }
     }
 }
