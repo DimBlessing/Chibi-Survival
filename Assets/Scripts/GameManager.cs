@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     //플레이어 게임 진행상태
     [Header("Player Info")]
+    public int playerId;
+    public GameObject[] playerPrefabs;
     public float health;
     public float maxHealth = 100;
     public int level;
@@ -31,10 +33,19 @@ public class GameManager : MonoBehaviour
     void Awake(){
         instance = this;
         uIManager.mainUI.SetActive(true);
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
+
+    public void SelectPlayer(int id){
+        player = Instantiate(playerPrefabs[id]).GetComponent<PlayerController>();
+        playerId = id;
     }
     public void GameStart(){
+        //playerId = id;
         health = maxHealth;
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        //player = playerPrefabs[playerId].GetComponent<PlayerController>();
+        player.gameObject.SetActive(true);
         ResumeGame();
         CreateBaseWeapon(player.baseWeapon);
     }
