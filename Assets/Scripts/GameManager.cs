@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,13 +11,14 @@ public class GameManager : MonoBehaviour
     [Header("Game Object")]
     public PoolManager pool;
     public PlayerController player;
+    public CinemachineVirtualCamera camera;
     public UIManager uIManager;
     public GameObject enemyCleaner;
 
     [Header("Game Control")]
     public bool isLive = true; //게임 진행여부
     public float gameTime;
-    public float maxGameTime = 2 * 10f;
+    public float maxGameTime = 2 * 20f;
 
     //플레이어 게임 진행상태
     [Header("Player Info")]
@@ -37,15 +39,16 @@ public class GameManager : MonoBehaviour
     }
 
     public void SelectPlayer(int id){
-        player = Instantiate(playerPrefabs[id]).GetComponent<PlayerController>();
         playerId = id;
     }
     public void GameStart(){
         //playerId = id;
+        player = Instantiate(playerPrefabs[playerId]).GetComponent<PlayerController>();
         health = maxHealth;
         //player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         //player = playerPrefabs[playerId].GetComponent<PlayerController>();
         player.gameObject.SetActive(true);
+        camera.Follow = player.transform;
         ResumeGame();
         CreateBaseWeapon(player.baseWeapon);
     }

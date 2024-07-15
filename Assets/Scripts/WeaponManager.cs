@@ -46,11 +46,11 @@ public class WeaponManager : MonoBehaviour
                 MeleeBatch();
                 break;
             case 1: //원거리 마법구
-                attackInterval = 0.3f;
+                attackInterval = 0.4f;
                 speed = 10f;
                 break;
             case 2: //화살
-                attackInterval = 0.2f;
+                attackInterval = 0.4f;
                 speed = 5f;
                 break;
             default:
