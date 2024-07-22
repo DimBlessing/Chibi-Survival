@@ -103,6 +103,14 @@ public class Enemy : MonoBehaviour
 
         //특수 아이템 랜덤 생성 기능 추가
         //일정 확률로 힐링포션, 자석, 스킬부스트 아이템 드랍
+        
+        //돈
+        int moneyRand = Random.Range(0, 2);
+        if(moneyRand == 0){
+            GameObject money = GameManager.instance.pool.DropItemPool(1);
+            money.transform.position = gameObject.transform.position;
+            money.GetComponent<DropItemManager>().Init(10);
+        }
     }
 
 

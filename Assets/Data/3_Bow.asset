@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3730a1595ec5a40f2af6882374c29f9b, type: 3}
   m_Name: 3_Bow
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 2
   ItemId: 2
   itemName: "\uB2E8\uAD81"
   itemDesc: "\uD654\uC0B4\uC744 \uC3D8\uC544 \uC801\uC744 \uAFF0\uB6AB\uC2B5\uB2C8\uB2E4."

@@ -15,10 +15,11 @@ public class GameManager : MonoBehaviour
     public UIManager uIManager;
     public GameObject enemyCleaner;
 
-    [Header("Game Control")]
+    [Header("Game Control / Info")]
     public bool isLive = true; //게임 진행여부
     public float gameTime;
     public float maxGameTime = 2 * 20f;
+    public int money = 0;
 
     //플레이어 게임 진행상태
     [Header("Player Info")]

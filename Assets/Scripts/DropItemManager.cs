@@ -20,6 +20,10 @@ public class DropItemManager : MonoBehaviour
     }
     void OnDisable(){
         GameManager.instance.GetExp(expAmount);
+        if(id == 10){
+            //돈 추가
+            GameManager.instance.money++;
+        }
     }
 
     public void Init(int id){

@@ -48,6 +48,7 @@ public class Item : MonoBehaviour
                     GameObject newWeapon = new GameObject();
                     weaponManager = newWeapon.AddComponent<WeaponManager>();
                     weaponManager.Init(itemData);
+                    Debug.Log("new weapon Add!");
                 }
                 else{
                     float nextDamage = itemData.baseDamage;

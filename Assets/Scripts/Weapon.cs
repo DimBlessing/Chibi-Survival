@@ -38,4 +38,8 @@ public class Weapon : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    void ReturnPool(){
+        gameObject.SetActive(false);
+    }
 }
