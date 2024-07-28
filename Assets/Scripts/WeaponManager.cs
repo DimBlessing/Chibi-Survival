@@ -45,7 +45,7 @@ public class WeaponManager : MonoBehaviour
             case 0: //근접
                 speed = 0;
                 //MeleeAttack();
-                attackInterval = 0.5f;
+                attackInterval = 0.3f;
                 break;
             case 1: //원거리 마법구
                 attackInterval = 0.4f;
@@ -65,8 +65,8 @@ public class WeaponManager : MonoBehaviour
     }
 
     public void LevelUp(float damage, int count, int penetrate, float attackInterval){
-        this.damage = damage;
-        this.count += count;
+        //this.damage = damage;
+        //this.count += count;
 
         if(id == 0 && penetrate == -1){
             //MeleeAttack();

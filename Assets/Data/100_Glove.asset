@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3730a1595ec5a40f2af6882374c29f9b, type: 3}
   m_Name: 100_Glove
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemType: 3
   ItemId: 100
   itemName: "\uAC00\uC8FD \uC7A5\uAC11"
   itemDesc: "\uB354 \uBE60\uB974\uAC8C \uACF5\uACA9\uD560 \uC218 \uC788\uAC8C \uB3C4\uC640\uC90D\uB2C8\uB2E4."

@@ -56,15 +56,17 @@ public class Item : MonoBehaviour
                     int nextPenetrate = 0;
                     float nextAttackInterval = 0f;
 
-                    nextDamage += itemData.baseDamage * itemData.damages[level];
-                    nextCount += itemData.counts[level];
-                    nextPenetrate += itemData.basePenetrate + itemData.penetrates[level];
+                    nextDamage += itemData.baseDamage * itemData.damages[level - 1];
+                    nextCount += itemData.counts[level - 1];
+                    nextPenetrate += itemData.basePenetrate + itemData.penetrates[level - 1];
                     //nextAttackInterval -= itemData.baseAttackInterval - itemData.attackIntervals[level];
 
                     if(itemData.itemType == ItemData.ItemType.Melee){
                         nextPenetrate = -1;
                         nextAttackInterval = 0;
                     }
+
+                    Debug.Log("d: " + nextDamage + " , level: " + level);
                     weaponManager.LevelUp(nextDamage, nextCount, nextPenetrate, nextAttackInterval);
                 }
                 level++;
@@ -89,7 +91,7 @@ public class Item : MonoBehaviour
                 GameManager.instance.health = GameManager.instance.maxHealth;   //힐량 조정 필요
                 break;
         }
-        if(level == itemData.damages.Length){
+        if(level - 1 == itemData.damages.Length){
             GetComponent<Button>().interactable = false;
         }
     }

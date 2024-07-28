@@ -34,7 +34,7 @@ public class LevelUp : MonoBehaviour
             Item randomItem = items[rand[i]];
             randomItem.gameObject.SetActive(true);
 
-            if(randomItem.level ==  randomItem.itemData.damages.Length){    //만렙인 경우
+            if(randomItem.level - 1 == randomItem.itemData.damages.Length){    //만렙인 경우
                 randomItem.gameObject.SetActive(false);
                 items[items.Length - 1].gameObject.SetActive(true); //임시로 포션 활성화
             }
