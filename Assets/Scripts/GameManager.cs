@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public float gameTime;
     public float maxGameTime = 2 * 20f;
     public int money = 0;
+    [HideInInspector]
+    public float currenTimeScale = 1f;
 
     //플레이어 게임 진행상태
     [Header("Player Info")]
@@ -121,6 +123,6 @@ public class GameManager : MonoBehaviour
     }
     public void ResumeGame(){
         isLive = true;
-        Time.timeScale = 1f;
+        Time.timeScale = currenTimeScale;
     }
 }
