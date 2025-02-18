@@ -21,6 +21,10 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    void Start(){
+
+    }
+
     public GameObject GetPoolObj(int index){
         GameObject select = null;
 

@@ -112,6 +112,11 @@ public class Enemy : MonoBehaviour
             money.GetComponent<DropItemManager>().Init(10);
         }
     }
+    void OnCollisionEnter2D(Collision2D collision){ //0802 시작
+        if(collision.gameObject.tag != "Obstacle")
+            return;
+
+    }
 
 
     private IEnumerator KnockBack(){

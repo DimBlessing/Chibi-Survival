@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour
 
     [Header("# Main UI")]
     public GameObject mainUI;
+    public GameObject selectUI;
 
     [Header("# End UI")]
     public GameObject endUI;
@@ -37,6 +38,7 @@ public class UIManager : MonoBehaviour
     void Awake(){
         hudUI.SetActive(false);
         mainUI.SetActive(true);
+        selectUI.SetActive(false);
         endUI.SetActive(false);
     }
 
