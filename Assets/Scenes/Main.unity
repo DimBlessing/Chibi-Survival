@@ -11913,6 +11913,7 @@ MonoBehaviour:
   enemyScanner: {fileID: 0}
   speed: 3
   inputVec: {x: 0, y: 0}
+  useTouchControl: 1
 --- !u!114 &531363846
 MonoBehaviour:
   m_ObjectHideFlags: 0
